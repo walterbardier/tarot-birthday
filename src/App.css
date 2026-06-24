@@ -1,0 +1,369 @@
+/* =========================
+   🌌 BASE GLOBAL
+========================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: radial-gradient(circle at top,
+    #352049 0%,
+    #22142d 35%,
+    #130d1b 70%,
+    #09070c 100%
+  );
+
+  font-family: "Cormorant Garamond", serif;
+  color: white;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* =========================
+   🏠 HOME LAYOUT
+========================= */
+
+.home {
+  position: relative;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* =========================
+   ✨ BACKGROUND OVERLAY
+========================= */
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.08;
+
+  background-image: radial-gradient(white 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+/* =========================
+   🧭 HERO
+========================= */
+
+.hero {
+  text-align: center;
+  margin-top: 80px;
+  margin-bottom: 60px;
+  z-index: 2;
+
+  animation: fade 1.5s ease;
+}
+
+.eyebrow {
+  letter-spacing: 5px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  opacity: 0.65;
+  margin-bottom: 18px;
+}
+
+.hero h1 {
+  font-size: 4rem;
+  font-weight: 500;
+  line-height: 1.1;
+  margin-bottom: 18px;
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  opacity: 0.75;
+  font-style: italic;
+}
+
+/* =========================
+   🃏 DECK
+========================= */
+
+.deck {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+
+  padding: 40px 20px;
+}
+
+/* =========================
+   🎴 CARD
+========================= */
+
+.card {
+  width: 140px;
+  height: 230px;
+
+  position: relative;
+  flex: 0 0 auto;
+  cursor: pointer;
+
+  perspective: 1400px;
+
+  transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.2, 1);
+  z-index: 1;
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.03);
+  filter: brightness(1.15);
+  z-index: 10;
+}
+
+/* pre animation */
+.card.pre-flip {
+  transform: translateY(-10px) scale(1.05);
+}
+
+/* =========================
+   🧩 CARD INNER (FLIP ENGINE)
+========================= */
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  transform-style: preserve-3d;
+
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+/* =========================
+   🂠 FACES
+========================= */
+
+.card-front,
+.card-back {
+  position: absolute;
+  inset: 0;
+
+  border-radius: 18px;
+  overflow: hidden;
+
+  backface-visibility: hidden;
+
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+.card-front {
+  transform: rotateY(180deg);
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* glow tarot */
+.card.flipped {
+  filter: drop-shadow(0 0 18px rgba(224, 193, 106, 0.25));
+}
+
+/* =========================
+   ✨ HERO ANIMATION
+========================= */
+
+@keyframes fade {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* =========================
+   🪄 MODAL OVERLAY
+========================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 999;
+
+  background: rgba(10, 8, 18, 0.58);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+/* =========================
+   🪞 MODAL
+========================= */
+
+.modal {
+  position: relative;
+
+  width: min(920px, 92vw);
+  height: 540px;
+
+  display: grid;
+  grid-template-columns: 38% 62%;
+
+  border-radius: 28px;
+  overflow: hidden;
+
+  background: linear-gradient(135deg, #120d1a, #1a1224);
+
+  box-shadow:
+    0 40px 120px rgba(0,0,0,.55),
+    inset 0 1px rgba(255,255,255,.04);
+}
+
+/* =========================
+   ✨ SHARED CARD
+========================= */
+
+.modal-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 28px;
+
+  background: transparent;
+
+  will-change: transform;
+}
+
+.modal-left img {
+  width: 100%;
+  max-width: 300px;
+
+  border-radius: 18px;
+
+  display: block;
+  user-select: none;
+  pointer-events: none;
+
+  box-shadow:
+    0 22px 60px rgba(0,0,0,.45),
+    0 0 28px rgba(224,193,106,.12);
+}
+
+/* =========================
+   📖 CONTENT
+========================= */
+
+.modal-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 55px 60px 55px 20px;
+
+  color: #f5f0ff;
+}
+
+.modal-right h2 {
+  font-size: clamp(2.8rem, 4vw, 3.8rem);
+  font-weight: 500;
+  line-height: .95;
+
+  margin-bottom: 14px;
+
+  letter-spacing: -.5px;
+}
+
+.keywords {
+  font-size: .95rem;
+
+  text-transform: uppercase;
+  letter-spacing: 4px;
+
+  opacity: .55;
+
+  margin-bottom: 30px;
+}
+
+.message {
+  font-size: 1.42rem;
+  line-height: 1.72;
+
+  opacity: .92;
+
+  max-width: 95%;
+}
+
+/* =========================
+   🃏 DECK FIXES
+========================= */
+
+.card {
+  transform-origin: center;
+  will-change: transform;
+}
+
+.card.active-card {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.card img {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* =========================
+   📱 RESPONSIVE
+========================= */
+
+@media (max-width: 860px) {
+
+  .modal {
+    width: min(95vw, 520px);
+    height: auto;
+
+    grid-template-columns: 1fr;
+  }
+
+  .modal-left {
+    padding: 30px 30px 10px;
+  }
+
+  .modal-left img {
+    max-width: 220px;
+  }
+
+  .modal-right {
+    padding: 20px 30px 40px;
+    text-align: center;
+  }
+
+  .modal-right h2 {
+    font-size: 2.5rem;
+  }
+
+  .message {
+    max-width: 100%;
+    font-size: 1.2rem;
+  }
+}
