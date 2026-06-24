@@ -35,6 +35,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  padding-bottom: 70px;
 }
 
 /* =========================
@@ -96,10 +98,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 18px;
   flex-wrap: wrap;
 
-  padding: 40px 20px;
+  gap: 24px;
+
+  padding: 40px 50px; /* 👈 esto te da los 50px laterales */
+  width: 100%;
 }
 
 /* =========================
@@ -107,17 +111,17 @@ body {
 ========================= */
 
 .card {
-  width: 140px;
-  height: 230px;
+  /* width: clamp(120px, 10vw, 190px);
+  height: clamp(200px, 16vw, 320px); */
+  width: clamp(150px, 12vw, 230px);
+  height: clamp(240px, 19vw, 380px);
 
   position: relative;
   flex: 0 0 auto;
   cursor: pointer;
 
   perspective: 1400px;
-
   transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.2, 1);
-  z-index: 1;
 }
 
 .card:hover {
@@ -222,8 +226,10 @@ body {
 .modal {
   position: relative;
 
-  width: min(920px, 92vw);
-  height: 540px;
+  width: clamp(320px, 85vw, 980px);
+  height: clamp(420px, 75vh, 600px);
+
+  padding: 40px;
 
   display: grid;
   grid-template-columns: 38% 62%;
@@ -247,11 +253,12 @@ body {
   align-items: center;
   justify-content: center;
 
-  padding: 28px;
+  padding: 2px;
 
   background: transparent;
 
   will-change: transform;
+  
 }
 
 .modal-left img {
@@ -278,7 +285,8 @@ body {
   flex-direction: column;
   justify-content: center;
 
-  padding: 55px 60px 55px 20px;
+  padding: 55px 30px 55px 50px;
+    /* arriba, der, abajo, izq */
 
   color: #f5f0ff;
 }
@@ -365,5 +373,685 @@ body {
   .message {
     max-width: 100%;
     font-size: 1.2rem;
+  }
+}
+
+
+/* =========================
+   ✨ OVERLAY
+========================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(10, 8, 18, 0.55);
+  backdrop-filter: blur(18px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 999;
+  overflow: hidden;
+}
+
+/* =========================
+   🃏 FLOATING CARD (LA CLAVE)
+========================= */
+
+.floating-card {
+  position: fixed;
+
+  width: 140px;
+  height: 230px;
+
+  border-radius: 18px;
+  overflow: hidden;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.45),
+    0 0 25px rgba(224, 193, 106, 0.12);
+
+  transform: translate(var(--start-x, 0px), var(--start-y, 0px))
+             scale(1);
+
+  transition:
+    transform 650ms cubic-bezier(0.22, 1, 0.36, 1),
+    width 650ms cubic-bezier(0.22, 1, 0.36, 1),
+    height 650ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-radius 650ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  will-change: transform;
+  z-index: 1000;
+}
+
+.floating-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  display: block;
+
+  user-select: none;
+  pointer-events: none;
+}
+
+/* estado abierto (modal) */
+.floating-card.active {
+  width: min(920px, 92vw);
+  height: 540px;
+
+  border-radius: 28px;
+
+  transform: translate(0px, 0px) scale(1);
+}
+
+/* =========================
+   📖 MODAL CONTENT
+========================= */
+
+.modal-content {
+  position: fixed;
+
+  width: min(920px, 92vw);
+  height: 540px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 60px;
+
+  opacity: 0;
+  transform: translateY(10px);
+
+  transition: opacity 300ms ease, transform 300ms ease;
+
+  color: #f5f0ff;
+
+  pointer-events: none;
+}
+
+.modal-content.show {
+  opacity: 1;
+  transform: translateY(0px);
+  pointer-events: auto;
+}
+
+/* =========================
+   🧠 TYPOGRAPHY
+========================= */
+
+.modal-content h2 {
+  font-size: 3.5rem;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.modal-content .keywords {
+  font-size: 0.95rem;
+  letter-spacing: 3px;
+  opacity: 0.6;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.modal-content .message {
+  font-size: 1.4rem;
+  line-height: 1.7;
+  opacity: 0.92;
+}
+
+/* =========================
+   🃏 DECK FIX
+========================= */
+
+.card.active-card {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* =========================
+   📱 RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+  .floating-card.active {
+    width: 92vw;
+    height: 420px;
+  }
+
+  .modal-content {
+    padding: 30px;
+  }
+
+  .modal-content h2 {
+    font-size: 2.4rem;
+  }
+
+  .modal-content .message {
+    font-size: 1.15rem;
+  }
+}
+
+.floating-card {
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  will-change: transform;
+
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card.drop-to-bottom {
+  transform: translateY(300px) scale(0.8);
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.final-button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.final-button {
+  position: relative;
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.15rem;
+  letter-spacing: 2px;
+
+  padding: 14px 28px;
+  border-radius: 999px;
+
+  border: 1px solid rgba(224, 193, 106, 0.35);
+
+  background: rgba(18, 13, 26, 0.6);
+  color: #f5f0ff;
+
+  cursor: pointer;
+
+  overflow: hidden;
+
+  backdrop-filter: blur(10px);
+
+  box-shadow:
+    0 0 18px rgba(224, 193, 106, 0.15),
+    inset 0 0 20px rgba(255, 255, 255, 0.03);
+
+  transition: all 0.4s ease;
+}
+
+/* brillo externo vivo */
+.final-button::before {
+  content: "";
+
+  position: absolute;
+  inset: -40%;
+
+  background: radial-gradient(
+    circle,
+    rgba(224, 193, 106, 0.35),
+    transparent 60%
+  );
+
+  animation: energyFlow 3.5s linear infinite;
+
+  filter: blur(18px);
+  opacity: 0.6;
+}
+
+/* capa de luz interna */
+.final-button::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(224, 193, 106, 0.15),
+    transparent
+  );
+
+  transform: translateX(-100%);
+  animation: shineMove 2.8s ease-in-out infinite;
+}
+
+/* hover: expansión energética */
+.final-button:hover {
+  transform: scale(1.05);
+
+  box-shadow:
+    0 0 35px rgba(224, 193, 106, 0.35),
+    0 0 80px rgba(224, 193, 106, 0.15),
+    inset 0 0 25px rgba(255, 255, 255, 0.05);
+
+  border-color: rgba(224, 193, 106, 0.6);
+}
+
+/* click */
+.final-button:active {
+  transform: scale(0.98);
+}
+
+/* energía flotando */
+@keyframes energyFlow {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+/* brillo viajando */
+@keyframes shineMove {
+  0% {
+    transform: translateX(-120%);
+  }
+  50% {
+    transform: translateX(120%);
+  }
+  100% {
+    transform: translateX(-120%);
+  }
+}
+
+/* FINAL MODAL */
+.final-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 3000;
+  backdrop-filter: blur(16px);
+}
+
+.final-card {
+  width: 340px;
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  animation: pop .5s ease;
+}
+
+@keyframes pop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.final-bg {
+  width: 100%;
+  display: block;
+}
+
+.final-content {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.final-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  object-fit: cover;
+  margin: 12px 0;
+}
+
+.final-content button {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+
+  background: #e0c16a;
+}
+
+
+
+/* 💖 BOTÓN CORAZÓN */
+.heart-button {
+  position: relative;
+
+  width: 64px;
+  height: 64px;
+
+  border-radius: 999px;
+
+  border: 1px solid rgba(224, 193, 106, 0.35);
+  background: rgba(18, 13, 26, 0.6);
+
+  color: #ff4d6d;
+  font-size: 1.6rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(10px);
+
+  box-shadow:
+    0 0 18px rgba(224, 193, 106, 0.15),
+    inset 0 0 12px rgba(255, 255, 255, 0.05);
+
+  transition: all 0.3s ease;
+
+  animation: heartbeat 1.6s ease-in-out infinite;
+}
+
+/* ✨ aura glow */
+.heart-button::before {
+  content: "";
+
+  position: absolute;
+  inset: -20px;
+
+  background: radial-gradient(
+    circle,
+    rgba(255, 77, 109, 0.35),
+    transparent 70%
+  );
+
+  filter: blur(14px);
+
+  opacity: 0.6;
+  animation: pulseGlow 2.5s ease-in-out infinite;
+}
+
+/* 💓 latido */
+@keyframes heartbeat {
+  0%   { transform: scale(1); }
+  25%  { transform: scale(1.08); }
+  40%  { transform: scale(0.98); }
+  60%  { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+/* 🌟 glow respirando */
+@keyframes pulseGlow {
+  0%   { transform: scale(0.9); opacity: 0.4; }
+  50%  { transform: scale(1.1); opacity: 0.7; }
+  100% { transform: scale(0.9); opacity: 0.4; }
+}
+
+/* ✨ hover mágico */
+.heart-button:hover {
+  transform: scale(1.25);
+  box-shadow:
+    0 0 35px rgba(255, 77, 109, 0.35),
+    0 0 70px rgba(224, 193, 106, 0.2);
+  border-color: rgba(255, 77, 109, 0.6);
+}
+
+/* click */
+.heart-button:active {
+  transform: scale(1.05);
+}
+
+/* 🌌 START SCREEN */
+.start-screen {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  background: radial-gradient(circle at top,
+    #352049 0%,
+    #130d1b 80%
+  );
+
+  z-index: 9999;
+}
+
+.start-screen h1 {
+  font-size: 2.6rem;
+  font-weight: 500;
+  margin-bottom: 28px;
+
+  opacity: 0.95;
+}
+
+/* ✨ start button */
+.start-button {
+  font-family: "Cormorant Garamond", serif;
+
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+
+  padding: 12px 28px;
+
+  border-radius: 999px;
+
+  border: 1px solid rgba(224, 193, 106, 0.4);
+
+  background: rgba(18, 13, 26, 0.6);
+  color: #f5f0ff;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(10px);
+
+  transition: all 0.4s ease;
+
+  box-shadow:
+    0 0 20px rgba(224, 193, 106, 0.15),
+    inset 0 0 10px rgba(255,255,255,0.05);
+}
+
+.start-title {
+  font-family: "Cormorant Garamond", serif;
+
+  font-size: 2.8rem;
+  font-weight: 500;
+
+  color: #f5f0ff;
+
+  margin-bottom: 30px;
+
+  letter-spacing: 1px;
+
+  animation: floatText 4s ease-in-out infinite;
+  text-shadow:
+    0 0 18px rgba(224, 193, 106, 0.15),
+    0 0 40px rgba(224, 193, 106, 0.08);
+}
+
+@keyframes floatText {
+  0% {
+    transform: translateY(0px);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 0.85;
+  }
+}
+
+.start-button {
+  position: relative;
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.25rem;
+  letter-spacing: 2px;
+
+  padding: 14px 34px;
+
+  border-radius: 999px;
+
+  border: 1px solid rgba(224, 193, 106, 0.35);
+
+  background: rgba(18, 13, 26, 0.6);
+  color: #f5f0ff;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(10px);
+
+  overflow: hidden;
+
+  transition: all 0.4s ease;
+
+  box-shadow:
+    0 0 20px rgba(224, 193, 106, 0.12),
+    inset 0 0 10px rgba(255,255,255,0.04);
+
+  /* animation: buttonPulse 3s ease-in-out infinite; */
+}
+
+/* ✨ energía flotante */
+.start-button::before {
+  content: "";
+
+  position: absolute;
+  inset: -60%;
+
+  background: radial-gradient(
+    circle,
+    rgba(224, 193, 106, 0.25),
+    transparent 60%
+  );
+
+  filter: blur(20px);
+
+  animation: auraMove 4s linear infinite;
+}
+
+/* shimmer interno que se mueve */
+.start-button::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(224, 193, 106, 0.12),
+    transparent
+  );
+
+  transform: translateX(-120%);
+
+  animation: shineMove 3s ease-in-out infinite;
+}
+
+/* 💓 pulso suave */
+@keyframes buttonPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 18px rgba(224, 193, 106, 0.12);
+  }
+  50% {
+    transform: scale(1.04);
+    box-shadow: 0 0 40px rgba(224, 193, 106, 0.25);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 18px rgba(224, 193, 106, 0.12);
+  }
+}
+
+/* 🌌 aura flotante */
+@keyframes auraMove {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* ✨ luz viajera */
+@keyframes shineMove {
+  0% {
+    transform: translateX(-120%);
+  }
+  50% {
+    transform: translateX(120%);
+  }
+  100% {
+    transform: translateX(-120%);
+  }
+}
+
+/* hover expansión viva */
+.start-button:hover {
+  transform: scale(1.1);
+
+  box-shadow:
+    0 0 50px rgba(224, 193, 106, 0.35),
+    0 0 100px rgba(224, 193, 106, 0.15);
+}
+
+.particles {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.particles span {
+  position: absolute;
+  bottom: -10px;
+
+  width: 4px;
+  height: 4px;
+
+  background: rgba(224, 193, 106, 0.7);
+  border-radius: 50%;
+
+  filter: blur(0.5px);
+
+  animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-110vh) scale(0.6);
+    opacity: 0;
   }
 }
