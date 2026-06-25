@@ -150,6 +150,7 @@ export default function Home() {
                 <br />
                 They simply reveal themselves.
               </p> */}
+              
               <p className="subtitle">
                 Comienza tu lectura revelando la primera carta.
               </p>

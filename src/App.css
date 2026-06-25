@@ -63,6 +63,9 @@ body {
   margin-bottom: 60px;
   z-index: 2;
 
+  padding-left: 15px;
+  padding-right: 15px;
+
   animation: fade 1.5s ease;
 }
 
@@ -1504,17 +1507,18 @@ body {
       letterFloat 6s ease-in-out infinite;
 }
 
+
 @media (max-width: 768px) {
 
   .letter {
 
-    width: calc(100vw - 32px);
+    width: calc(100vw - 40px);
 
-    max-width: 520px;
+    max-width: calc(100vh - 20px);
 
     min-height: auto;
 
-    max-height: calc(100vh - 40px);
+    max-height: calc(100vh - 20px);
 
     overflow-y: auto;
 
@@ -1524,10 +1528,8 @@ body {
   .letter-content {
 
     padding:
-      42px
-      22px
-      42px
-      22px;
+
+      28px;
   }
 
   .letter-small {
@@ -1548,6 +1550,21 @@ body {
     font-size: clamp(1.05rem, 4.4vw, 1.25rem);
 
     line-height: 1.75;
+  }
+
+  .deck {
+    position: relative;
+    z-index: 1;
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  
+    gap: 20px;
+  
+    padding: 5px 5px; /* 👈 esto te da los 50px laterales */
+    width: 100%;
   }
 
 }

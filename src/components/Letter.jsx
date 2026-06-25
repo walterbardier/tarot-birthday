@@ -75,8 +75,8 @@ export default function Letter({ reveal }) {
 
             <br /><br />
 
-            Si volviera un año atrás, nunca habría imaginado que la mejor de todas
-            las sorpresas sería coincidir con vos.
+            Si volviera un año atrás, nunca habría imaginado que la mejor sorpresa
+            sería coincidir con vos.
 
             Porque, en cada viaje, incluso cuando la tormenta arrecia y la niebla parece
             ocultarlo todo, nuestros caminos siempre encuentran la manera de volver a coincidir.
@@ -84,16 +84,16 @@ export default function Letter({ reveal }) {
             Y estoy agradecido por eso; por tenerte en mi vida.
             <br />
             Creo que no llegás a imaginar lo mucho que significas para mí
-            y cuánto me has ayudado en esta etapa algo confusa.
+            y cuánto me has ayudado en esta etapa tan confusa.
 
             <br /><br />
 
             Feliz cumpleaños. Gracias por existir, por acompañarme y por hacer que este
-            último año este lleno de recuerdos que nunca quisiera borrar.
+            último año esté lleno de recuerdos que nunca quisiera borrar.
 
             <br /><br />
 
-            Besitos infinitos,
+            Te quiero muchito,
             <br />
             Walt ♡
 
