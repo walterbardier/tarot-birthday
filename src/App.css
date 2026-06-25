@@ -88,6 +88,7 @@ body {
   font-size: 1.3rem;
   opacity: 0.75;
   font-style: italic;
+  color: antiquewhite;
 }
 
 /* =========================
@@ -105,7 +106,7 @@ body {
 
   gap: 24px;
 
-  padding: 40px 50px; /* 👈 esto te da los 50px laterales */
+  padding: 1px 20px; /* 👈 esto te da los 50px laterales */
   width: 100%;
 }
 
@@ -557,7 +558,7 @@ body {
 .final-button-wrapper {
   display: flex;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 5px; /* Espacio arriba del boton */
 }
 
 .final-button {
@@ -910,6 +911,8 @@ body {
   font-size: 1.25rem;
   letter-spacing: 2px;
 
+  
+  /* top: 7px; esapcio arriba */
   padding: 14px 34px;
 
   border-radius: 999px;
@@ -1563,8 +1566,114 @@ body {
   
     gap: 20px;
   
-    padding: 5px 5px; /* 👈 esto te da los 50px laterales */
+    padding: 5px 5px; /* 👈 esapcio en laterales */
     width: 100%;
   }
 
+  .modal {
+    padding: 5px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
+  .modal-left {
+    padding-bottom: 40px;
+  }
+
+  .fullscreen-notification {
+    left: 40px; /* Espacio en borde izq */
+    right: 40px; /* Espacio en borde der */
+
+    visibility: hidden; /* Para que no se vea en mobile */
+  }
+
+  .eyebrow {
+    font-size: 11px;
+  }
+  
+
+}
+
+.start-content{
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  text-align:center;
+}
+
+.fullscreen-notification {
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 2rem; /* Separación con el título */
+  color: rgba(255, 255, 255, 0.6);
+  padding: 8px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  cursor: default;
+}
+
+.start-screen {
+  position: relative; /* Importante para que el absolute tome esto como referencia */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  padding: 30px;
+}
+
+.fullscreen-notification {
+  position: absolute;
+  top: 60px; /* Espacio en borde superior */
+
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  padding: 10px;
+  pointer-events: none; /* Para que no interfiera con clicks si es necesario */
+  z-index: 10;
+}
+
+.progress-container {
+  width: 300px;
+  margin: 2rem auto;
+  text-align: center;
+
+  padding-top: 30px;
+}
+
+.progress-bar {
+  height: 2px;
+  background: linear-gradient(90deg, #c0a060, #ffffff);
+  border-radius: 2px;
+  margin-bottom: 10px;
+  box-shadow: 0 0 10px rgba(192, 160, 96, 0.5);
+}
+
+.progress-text {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Efecto brillo para el botón final */
+.final-button {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.final-button:hover {
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
 }

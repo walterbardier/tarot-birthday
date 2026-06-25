@@ -18,20 +18,13 @@ export default function Home() {
   const [showFinal, setShowFinal] = useState(false);
 
   const cardRefs = useRef({});
-
   const [particles, setParticles] = useState([]);
 
-  useEffect(() => {
-    if (selectedCard) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-  
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [selectedCard]);
+  // Cálculo de progreso
+  const totalCards = cards.length;
+  const flippedCount = Object.keys(flippedCards).length;
+  const remaining = totalCards - flippedCount;
+  const progressPercentage = totalCards > 0 ? (flippedCount / totalCards) * 100 : 0;
 
   useEffect(() => {
     const arr = Array.from({ length: 45 }).map((_, i) => ({
@@ -79,10 +72,43 @@ export default function Home() {
     setShowFinal(true);
   };
 
+  const containerVariants = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: 0.22,
+        delayChildren: 0.25,
+      },
+    },
+  };
+  
+  const itemVariants = {
+    hidden: { opacity: 0, y: 18, filter: "blur(12px)" },
+    show: {
+      opacity: 1, y: 0, filter: "blur(0px)",
+      transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
+    },
+  };
+
+  const ritualMessages = [
+    "Comienza tu lectura revelando la primera carta.",
+    "La curiosidad es el primer paso hacia la verdad.",
+    "No busques respuestas, permite que ellas te encuentren.",
+    "Revela las cartas y deja que el destino hable.",
+    "Cada carta guarda un secreto que espera por ti."
+  ];
+
+  const [currentMessage, setCurrentMessage] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentMessage((prev) => (prev + 1) % ritualMessages.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <LayoutGroup id="tarot">
-
-      {/* 🌌 particles */}
       <div className="particles">
         {particles.map((p) => (
           <span
@@ -105,22 +131,33 @@ export default function Home() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <motion.h1
-              className="start-title"
-              initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            <motion.div
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 0.7 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+              className="fullscreen-notification"
             >
-              Querés conocer tu destino?
-              
-            </motion.h1>
+              ✦ Presiona F11 para una revelación inmersiva ✦
+            </motion.div>
 
-            <motion.button
-              className="start-button"
-              onClick={() => setStarted(true)}
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="show"
+              className="start-content"
             >
-              {/* Comenzar */}
-              No realmente, pero acá voy
-            </motion.button>
+              <motion.p variants={itemVariants} className="eyebrow">✦ el destino ya ha elegido ✦</motion.p>
+              <motion.h1 variants={itemVariants} className="start-title">¿Querés conocer tu destino?</motion.h1>
+              <motion.button
+                variants={itemVariants}
+                className="start-button"
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: .97 }}
+                onClick={() => setStarted(true)}
+              >
+                No realmente, pero me obligaron
+              </motion.button>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -133,27 +170,24 @@ export default function Home() {
             initial={{ opacity: 0, filter: "blur(12px)" }}
             animate={{ opacity: 1, filter: "blur(0px)" }}
           >
-
             <div className="overlay" />
-
             <section className="hero">
               <p className="eyebrow">✦ el destino ya ha elegido ✦</p>
-
-              <h1>
-                Cada carta guarda
-                <br />
-                un fragmento de tu historia.
-              </h1>
-
-              {/* <p className="subtitle">
-                You don't choose the cards,
-                <br />
-                They simply reveal themselves.
-              </p> */}
-              
-              <p className="subtitle">
-                Comienza tu lectura revelando la primera carta.
-              </p>
+              <h1>Cada carta guarda<br />un fragmento de tu historia.</h1>
+              <div className="subtitle-wrapper" style={{ height: '3rem', overflow: 'hidden' }}>
+                <AnimatePresence mode="wait">
+                  <motion.p 
+                    key={currentMessage}
+                    className="subtitle"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    {ritualMessages[currentMessage]}
+                  </motion.p>
+                </AnimatePresence>
+              </div>
             </section>
 
             <section className="deck">
@@ -169,57 +203,54 @@ export default function Home() {
                   onClick={() => openCard(card, card.id)}
                 >
                   <div className="card-inner">
-                    <div className="card-back">
-                      <img src={card.back} alt="back" />
-                    </div>
-
-                    <div className="card-front">
-                      <img src={card.image} alt={card.name} />
-                    </div>
+                    <div className="card-back"><img src={card.back} alt="back" /></div>
+                    <div className="card-front"><img src={card.image} alt={card.name} /></div>
                   </div>
                 </motion.div>
               ))}
             </section>
 
-            {/* 🎴 FINAL BUTTON */}
+            {/* 📊 BARRA DE PROGRESO */}
+            <div className="progress-container">
+              <motion.div 
+                className="progress-bar"
+                initial={{ width: 0 }}
+                animate={{ width: `${progressPercentage}%` }}
+                transition={{ duration: 0.5 }}
+              />
+              <p className="progress-text">
+                {remaining > 0 
+                  ? `Te faltan ${remaining} carta${remaining > 1 ? 's' : ''} para la gran revelación.`
+                  : "El destino se ha revelado por completo."}
+              </p>
+            </div>
+
             <AnimatePresence>
               {showFinalButton && !showFinal && (
                 <motion.div
                   className="final-button-wrapper"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
                 >
-                  <button
+                  <motion.button
                     className="final-button"
                     onClick={triggerShuffle}
+                    animate={{ 
+                      boxShadow: ["0 0 0px rgba(255,255,255,0)", "0 0 20px rgba(255,255,255,0.6)", "0 0 0px rgba(255,255,255,0)"] 
+                    }}
+                    transition={{ repeat: Infinity, duration: 2 }}
                   >
-                    Mensaje desde arriba
-                  </button>
+                    Mensaje del cielo
+                  </motion.button>
                 </motion.div>
               )}
             </AnimatePresence>
 
-            {/* 🌌 FINAL CARD */}
-            <AnimatePresence>
-              {showFinal && (
-                <FinalCard onClose={() => setShowFinal(false)} />
-              )}
-            </AnimatePresence>
-
-            {/* MODAL */}
-            <AnimatePresence mode="wait">
-              {selectedCard && (
-                <CardModal
-                  card={selectedCard}
-                  onClose={closeModal}
-                />
-              )}
-            </AnimatePresence>
-
+            <AnimatePresence>{showFinal && <FinalCard onClose={() => setShowFinal(false)} />}</AnimatePresence>
+            <AnimatePresence mode="wait">{selectedCard && <CardModal card={selectedCard} onClose={closeModal} />}</AnimatePresence>
           </motion.main>
         )}
       </AnimatePresence>
-
     </LayoutGroup>
   );
 }
