@@ -1055,3 +1055,499 @@ body {
     opacity: 0;
   }
 }
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ======================================================
+   ✉️ ENVELOPE
+====================================================== */
+
+.final-stage {
+  position: relative;
+
+  width: 700px;
+  height: 600px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.envelope-wrapper {
+  position: relative;
+
+  width: 360px;
+  height: 240px;
+
+  perspective: 1800px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* aura */
+
+.envelope-glow {
+  position: absolute;
+
+  width: 520px;
+  height: 520px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    rgba(224,193,106,.18),
+    rgba(224,193,106,.05),
+    transparent 70%
+  );
+
+  filter: blur(35px);
+
+  z-index: 0;
+}
+
+/* =========================
+   PARTE TRASERA
+========================= */
+
+.envelope-back {
+  position: absolute;
+
+  inset: 0;
+
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #f7f0dc,
+      #e8dcc1
+    );
+
+  box-shadow:
+    0 25px 70px rgba(0,0,0,.45);
+
+  z-index: 1;
+}
+
+/* =========================
+   FRENTE
+========================= */
+
+.envelope-front {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 135px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #efe3c7,
+      #dccba7
+    );
+
+  clip-path: polygon(
+      0 0,
+      50% 70%,
+      100% 0,
+      100% 100%,
+      0 100%
+  );
+
+  z-index: 5;
+
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.4);
+}
+
+/* =========================
+   SOLAPA
+========================= */
+
+.envelope-flap {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  top: 0;
+
+  height: 125px;
+
+  clip-path: polygon(
+      0 0,
+      100% 0,
+      50% 100%
+  );
+
+  background:
+    linear-gradient(
+      to bottom,
+      #f7edd4,
+      #e2d3b4
+    );
+
+  transform-origin: top center;
+  transform-style: preserve-3d;
+
+  z-index: 6;
+
+  box-shadow:
+    inset 0 -2px rgba(0,0,0,.06);
+}
+
+/* =========================
+   CARTA ASOMANDO
+========================= */
+
+.letter-preview {
+  position: absolute;
+
+  width: 300px;
+  height: 185px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #fffdf7,
+      #f6efdf
+    );
+
+  border-radius: 6px;
+
+  box-shadow:
+    0 12px 35px rgba(0,0,0,.18);
+
+  z-index: 2;
+}
+
+/* líneas decorativas */
+
+.letter-preview::before {
+
+  content:"";
+
+  position:absolute;
+
+  left:25px;
+  right:25px;
+  top:35px;
+  bottom:35px;
+
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 18px,
+      rgba(90,70,40,.08) 19px,
+      transparent 20px
+    );
+}
+
+/* =========================
+   SELLO
+========================= */
+
+.wax-seal {
+
+  position:absolute;
+
+  width:62px;
+  height:62px;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle at top,
+      #b62d37,
+      #7d131b
+    );
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  color:#f7d78d;
+  font-size:22px;
+
+  box-shadow:
+      0 0 18px rgba(180,30,40,.45),
+      inset 0 2px rgba(255,255,255,.2);
+
+  z-index:10;
+}
+
+/* =========================
+   CHISPAS
+========================= */
+
+.spark{
+
+  position:absolute;
+
+  width:6px;
+  height:6px;
+
+  border-radius:50%;
+
+  background:#f3d98f;
+
+  box-shadow:
+      0 0 10px #f3d98f,
+      0 0 25px #f3d98f;
+
+  z-index:20;
+}
+
+/* =========================
+   SOMBRA
+========================= */
+
+.envelope-wrapper::after{
+
+  content:"";
+
+  position:absolute;
+
+  bottom:-38px;
+
+  width:260px;
+  height:34px;
+
+  background:rgba(0,0,0,.28);
+
+  filter:blur(16px);
+
+  border-radius:50%;
+
+  z-index:-1;
+}
+
+/* =====================================================
+   📜 LETTER
+===================================================== */
+
+.letter {
+
+  position: absolute;
+
+  /* tamaño de la carta */
+  width: 1300px;
+  min-height: 650px;
+
+  background:
+      linear-gradient(
+          to bottom,
+          #fffdf6,
+          #f6efde
+      );
+
+  border-radius: 10px;
+
+  overflow: hidden;
+
+  box-shadow:
+      0 40px 120px rgba(0,0,0,.35),
+      0 0 60px rgba(224,193,106,.12);
+
+  z-index: 50;
+}
+
+/* textura */
+
+.letter::before{
+
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  opacity:.18;
+
+  background:
+
+      radial-gradient(circle at 10% 20%,rgba(0,0,0,.05),transparent 30%),
+
+      radial-gradient(circle at 80% 60%,rgba(0,0,0,.04),transparent 35%),
+
+      radial-gradient(circle at 30% 80%,rgba(0,0,0,.03),transparent 30%);
+}
+
+/* borde */
+
+.letter::after{
+
+  content:"";
+
+  position:absolute;
+
+  inset:18px;
+
+  border:1px solid rgba(120,90,40,.12);
+
+  pointer-events:none;
+}
+
+/* brillo */
+
+.letter-shine{
+
+  position:absolute;
+
+  top:0;
+  bottom:0;
+
+  width:120px;
+
+  transform:skewX(-18deg);
+
+  background:
+
+      linear-gradient(
+          to right,
+          transparent,
+          rgba(255,255,255,.4),
+          transparent
+      );
+}
+
+/* contenido */
+
+.letter-content{
+
+  position:relative;
+
+  padding:70px;
+
+  text-align:center;
+
+  z-index:2;
+}
+
+.letter-small{
+
+  letter-spacing:6px;
+
+  text-transform:uppercase;
+
+  font-size:.8rem;
+
+  color:#8b7a52;
+
+  margin-bottom:14px;
+}
+
+.letter h2{
+
+  color:#5d4726;
+
+  font-size:3rem;
+
+  font-weight:500;
+
+  margin-bottom:35px;
+}
+
+.letter-text{
+
+  color:#59462b;
+
+  font-size:1.35rem;
+
+  line-height:1.9;
+
+  white-space:pre-line;
+}
+
+/* sombra */
+
+.letter{
+
+  filter:
+      drop-shadow(0 30px 70px rgba(0,0,0,.3));
+}
+
+/* flotación */
+
+@keyframes letterFloat{
+
+  0%{
+      transform:translateY(0px);
+  }
+
+  50%{
+      transform:translateY(-8px);
+  }
+
+  100%{
+      transform:translateY(0px);
+  }
+
+}
+
+.letter{
+
+  animation:
+      letterFloat 6s ease-in-out infinite;
+}
+
+@media (max-width: 768px) {
+
+  .letter {
+
+    width: calc(100vw - 32px);
+
+    max-width: 520px;
+
+    min-height: auto;
+
+    max-height: calc(100vh - 40px);
+
+    overflow-y: auto;
+
+    border-radius: 16px;
+  }
+
+  .letter-content {
+
+    padding:
+      42px
+      22px
+      42px
+      22px;
+  }
+
+  .letter-small {
+
+    font-size: .72rem;
+    letter-spacing: 4px;
+  }
+
+  .letter h2 {
+
+    font-size: clamp(2rem, 8vw, 2.6rem);
+
+    margin-bottom: 24px;
+  }
+
+  .letter-text {
+
+    font-size: clamp(1.05rem, 4.4vw, 1.25rem);
+
+    line-height: 1.75;
+  }
+
+}
