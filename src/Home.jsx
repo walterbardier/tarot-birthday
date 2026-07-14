@@ -240,7 +240,8 @@ export default function Home() {
                     }}
                     transition={{ repeat: Infinity, duration: 2 }}
                   >
-                    Mensaje del cielo
+                    🀧 Mensaje del cielo 🀧
+                    {/* ☽ Mensaje del cielo ☾ */}
                   </motion.button>
                 </motion.div>
               )}
