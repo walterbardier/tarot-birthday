@@ -5,7 +5,7 @@ import back from "../assets/cards/back.png";
 import sundayMorning from "../assets/cards/the-sunday-morning.png";
 import homePit from "../assets/cards/the-home-pit.png";
 import atlantic from "../assets/cards/the-atlantic.png";
-import carnival from "../assets/cards/the-carnival.png";
+// import carnival from "../assets/cards/the-carnival.png";
 import disclosure from "../assets/cards/the-disclosure-day.png";
 import dessert from "../assets/cards/the-dessert.png";
 import car from "../assets/cards/the-safety-car.png";
@@ -30,7 +30,7 @@ export const tarotCards = [
         keywords: "hogar | refugio | distancia emocional",
         message:
             // "Cuando el hogar parece lejano y el cariño difícil de encontrar, esta carta recuerda una verdad: ninguna distancia es mayor que el amor de quienes nunca han dejado de esperar tu regreso."
-            "Cuando la carrera parece interminable, esta carta recuerda una verdad: ninguna distancia es mayor que el amor de quienes nunca han dejado de seguir tu carrera y esperar tu regreso cada vez."
+            "Cuando la carrera parece interminable, esta carta recuerda una verdad: ninguna distancia es mayor que el amor de quienes nunca han dejado de seguir tu carrera y a su vez, esperar tu regreso."
             // "Cuando la carrera se vuelve interminable y el hogar parece un horizonte lejano, el Home Pit es el punto de encuentro donde el ruido del mundo se apaga y el amor repara tus fuerzas. Cada vez que extrañas, no estás perdiendo ritmo, sino recargando tu esencia con el amor de quienes, desde el otro lado, nunca han dejado de seguir tu carrera."
     },
 
@@ -74,13 +74,23 @@ export const tarotCards = [
             "¿Podes imaginar cómo es...?"
     },
 
+    // {
+    //     id: 6,
+    //     name: "The Safety Car",
+    //     image: car,
+    //     back,
+    //     keywords: "pausa | control | aprendizaje",
+    //     message:
+    //         "La interrupción no es error, sino señal. Incluso la impaciencia es llevada a aprender otro ritmo: el de lo que ocurre cuando el control deja de sostenerlo todo. El destino, curiosamente, disfruta poniendo la paciencia de algunos a prueba."
+    // }
+
     {
         id: 6,
         name: "The Safety Car",
         image: car,
         back,
-        keywords: "pausa | control | aprendizaje",
+        keywords: "faro | acompañamiento | guía",
         message:
-            "La interrupción no es error, sino señal. Incluso la impaciencia es llevada a aprender otro ritmo: el de lo que ocurre cuando el control deja de sostenerlo todo. El destino, curiosamente, disfruta poniendo la paciencia de algunos a prueba."
+            'Cuando el caos se desata, tú eres la luz que escolta. No vienes a frenar, sino a guiar el ritmo en la confusión. Tu presencia es el faro que permite al otro encontrar su calma mientras repara lo roto. A veces, la forma más pura de amor es simplemente aparecer y decir: "Vamos despacio, que aquí estoy yo hasta que la pista esté despejada".'
     }
 ];

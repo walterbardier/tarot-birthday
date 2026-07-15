@@ -230,8 +230,8 @@ body {
 .modal {
   position: relative;
 
-  width: clamp(320px, 85vw, 980px);
-  height: clamp(420px, 75vh, 600px);
+  width: clamp(320px, 85vw, 1000px);
+  height: clamp(420px, 80vh, 700px);
 
   padding: 40px;
 
@@ -571,7 +571,7 @@ body {
   padding: 14px 28px;
   border-radius: 999px;
 
-  border: 1px solid rgba(224, 193, 106, 0.35);
+  border: 2px solid rgba(224, 193, 106, 0.35);
 
   background: rgba(18, 13, 26, 0.6);
   color: #f5f0ff;
@@ -598,7 +598,7 @@ body {
 
   background: radial-gradient(
     circle,
-    rgba(224, 193, 106, 0.35),
+    rgba(224, 192, 106, 0.14),
     transparent 60%
   );
 
